@@ -1,12 +1,17 @@
 import express from "express";
-import cors from "cors";
 import dotenv from "dotenv";
-
-const app = express();
+import route from "./routes";
 
 dotenv.config();
 
-app.use(cors());
+const app = express();
+
 app.use(express.json());
+
+app.use("/", route);
+
+app.all("*", (req, res) => {
+  res.status(404).json({ success: false, msg: "Path not found" });
+});
 
 app.listen(process.env.PORT, () => console.log(`Server listens on Port 8080`));
