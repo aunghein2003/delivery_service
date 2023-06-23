@@ -1,0 +1,83 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model admin {
+  code            String @id @db.Char(5)
+  name            String @db.VarChar(80)
+  phone_number    String @db.VarChar(15)
+  hashed_password String @db.VarChar(80)
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model biker {
+  code            String     @id @db.Char(5)
+  name            String     @db.VarChar(80)
+  phone_number    String     @db.VarChar(15)
+  change_password Boolean?   @default(false)
+  hashed_password String     @db.VarChar(80)
+  delivery        delivery[]
+  pickup          pickup[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model online_shop {
+  id           Int      @id @default(autoincrement())
+  name         String   @db.VarChar(80)
+  phone_number String   @db.VarChar(15)
+  address      String   @db.VarChar(80)
+  township     String   @db.VarChar(50)
+  orders       orders[] @relation("online_shop_orders")
+
+  @@index([name])
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model orders {
+  id             Int         @id @default(autoincrement())
+  name           String      @db.VarChar(80)
+  phone_number   String      @db.VarChar(15)
+  address        String      @db.VarChar(80)
+  township       String      @db.VarChar(50)
+  total_amount   Int
+  deli_fees      Int
+  online_shop    online_shop @relation("online_shop_orders", fields: [online_shop_id], references: [id], onDelete: Restrict, onUpdate: Cascade, map: "orders_ibfk_1")
+  online_shop_id Int
+  pickup         pickup?     @relation("orders_to_pickup")
+
+  @@index([online_shop_id], map: "online_shop")
+}
+
+model pickup {
+  paid        Boolean
+  pickup_date DateTime  @default(now())
+  orders      orders    @relation("orders_to_pickup", fields: [order_id], references: [id], onDelete: Restrict, onUpdate: Cascade, map: "pickup_ibfk_1")
+  order_id    Int       @id
+  picker      biker     @relation(fields: [pickup_by], references: [code], onDelete: Restrict, onUpdate: Cascade, map: "pickup_ibfk_2")
+  pickup_by   String    @db.Char(5)
+  delivery    delivery?
+
+  @@index([pickup_by], map: "pickup_by")
+}
+
+model delivery {
+  order_id Int              @id
+  biker_id String           @db.Char(5)
+  status   delivery_status? @default(Assigned)
+  pickup   pickup           @relation(fields: [order_id], references: [order_id], onDelete: Restrict, onUpdate: Cascade, map: "delivery_ibfk_1")
+  biker    biker            @relation(fields: [biker_id], references: [code], onDelete: Restrict, onUpdate: Cascade, map: "delivery_ibfk_2")
+
+  @@index([biker_id], map: "biker_id")
+}
+
+enum delivery_status {
+  Assigned
+  Enroute
+  Delivered
+}
