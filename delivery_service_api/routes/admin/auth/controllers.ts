@@ -6,9 +6,9 @@ import jwt from "jsonwebtoken";
 const prisma = new PrismaClient();
 
 export async function authenticateUser(req: Request, res: Response) {
-  const code = req.body.code || "";
-  const password = req.body.password || "";
-  const rember = req.body.rember || false;
+  const code = req.body?.code;
+  const password = req.body?.password;
+  const rember = req.body?.rember || false;
 
   if (!code || !password) {
     return res
