@@ -48,35 +48,6 @@ export async function createBiker(req: Request, res: Response) {
   }
 }
 
-//  PATCH /admin/biker/:id
-export async function updateBiker(req: Request, res: Response) {
-  const code = req.params.id;
-
-  const bikerExists = await prisma.biker.findUnique({ where: { code } });
-
-  if (!bikerExists) {
-    return res
-      .status(400)
-      .json({ success: false, msg: "Biker does not exist!" });
-  }
-
-  const fields = ["name", "phone_number"];
-  const data: { [key: string]: any } = {};
-
-  for (let field in req.body) {
-    if (!fields.includes(field)) continue;
-
-    data[field] = req.body[field];
-  }
-
-  try {
-    await prisma.biker.update({ data, where: { code } });
-    res.status(200).json({ success: true });
-  } catch (err) {
-    res.status(500).json({ success: false, msg: "Unknown Error" });
-  }
-}
-
 //  DELETE /admin/biker/:id
 export async function deleteBiker(req: Request, res: Response) {
   const code = req.params.id;
