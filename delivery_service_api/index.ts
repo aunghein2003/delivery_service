@@ -11,7 +11,9 @@ app.use(express.json());
 app.use("/", route);
 
 app.all("*", (req, res) => {
-  res.status(404).json({ success: false, msg: "Path not found" });
+  res
+    .status(404)
+    .json({ success: false, msg: "Path not found or Method Incorrect" });
 });
 
 app.listen(process.env.PORT, () => console.log(`Server listens on Port 8080`));

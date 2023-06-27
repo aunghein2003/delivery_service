@@ -59,8 +59,8 @@ model pickup {
   pickup_date DateTime  @default(now())
   orders      orders    @relation("orders_to_pickup", fields: [order_id], references: [id], onDelete: Restrict, onUpdate: Cascade, map: "pickup_ibfk_1")
   order_id    Int       @id
-  picker      biker     @relation(fields: [pickup_by], references: [code], onDelete: Restrict, onUpdate: Cascade, map: "pickup_ibfk_2")
-  pickup_by   String    @db.Char(5)
+  picker      biker?    @relation(fields: [pickup_by], references: [code], onDelete: SetNull, onUpdate: Cascade, map: "pickup_ibfk_2")
+  pickup_by   String?   @db.Char(5)
   delivery    delivery?
 
   @@index([pickup_by], map: "pickup_by")
@@ -68,10 +68,10 @@ model pickup {
 
 model delivery {
   order_id Int              @id
-  biker_id String           @db.Char(5)
+  biker_id String?          @db.Char(5)
   status   delivery_status? @default(Assigned)
   pickup   pickup           @relation(fields: [order_id], references: [order_id], onDelete: Restrict, onUpdate: Cascade, map: "delivery_ibfk_1")
-  biker    biker            @relation(fields: [biker_id], references: [code], onDelete: Restrict, onUpdate: Cascade, map: "delivery_ibfk_2")
+  biker    biker?           @relation(fields: [biker_id], references: [code], onDelete: SetNull, onUpdate: Cascade, map: "delivery_ibfk_2")
 
   @@index([biker_id], map: "biker_id")
 }
