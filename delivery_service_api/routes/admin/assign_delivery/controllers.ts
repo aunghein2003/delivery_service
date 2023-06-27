@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 
 export async function getAllDeliveries(req: Request, res: Response) {
   const all_deliveries = await prisma.delivery.findMany({
-    include: { pickup: true },
+    include: { pickup: { include: { orders: true } } },
     orderBy: { pickup: { pickup_date: "asc" } },
   });
 
