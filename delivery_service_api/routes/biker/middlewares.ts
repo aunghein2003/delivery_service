@@ -36,6 +36,7 @@ export async function authorizeBiker(
       return res.status(403).json({ success: false, msg: "re-auth" });
     }
 
+    req.body.biker = dbBiker;
     next();
   } catch (err) {
     res.status(403).json({ success: false, msg: "re-auth" });

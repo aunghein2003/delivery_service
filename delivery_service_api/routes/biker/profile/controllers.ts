@@ -6,15 +6,7 @@ import jwt from "jsonwebtoken";
 const prisma = new PrismaClient();
 
 export async function updateProfile(req: Request, res: Response) {
-  const { id } = req.params;
-
-  const bikerExist = await prisma.biker.findUnique({ where: { code: id } });
-
-  if (!bikerExist) {
-    return res
-      .status(400)
-      .json({ success: false, msg: "Biker does not exist" });
-  }
+  const biker = req.body.biker;
 
   const name = req.body?.name;
   const phone_number = req.body?.phone_number;
@@ -28,7 +20,7 @@ export async function updateProfile(req: Request, res: Response) {
   try {
     await prisma.biker.update({
       data: { name, phone_number },
-      where: { code: id },
+      where: { code: biker.code },
     });
     res.status(200).json({ success: true });
   } catch (err) {
@@ -37,17 +29,9 @@ export async function updateProfile(req: Request, res: Response) {
 }
 
 export async function changePassword(req: Request, res: Response) {
-  const { id } = req.params;
+  const biker = req.body.biker;
   const old_password = req.body?.old_password;
   const new_password = req.body?.new_password;
-
-  const bikerExist = await prisma.biker.findUnique({ where: { code: id } });
-
-  if (!bikerExist) {
-    return res
-      .status(400)
-      .json({ success: false, msg: "Biker does not exist" });
-  }
 
   if (!old_password || !new_password) {
     return res
@@ -55,7 +39,7 @@ export async function changePassword(req: Request, res: Response) {
       .json({ success: false, msg: "Old and New Password missing" });
   }
 
-  const valid = await bcrypt.compare(old_password, bikerExist.hashed_password);
+  const valid = await bcrypt.compare(old_password, biker.hashed_password);
 
   if (!valid) {
     return res
@@ -69,7 +53,7 @@ export async function changePassword(req: Request, res: Response) {
   try {
     const updateBiker = await prisma.biker.update({
       data: { hashed_password: new_password_hash, change_password: true },
-      where: { code: id },
+      where: { code: biker.code },
     });
 
     const { code, hashed_password } = updateBiker;
