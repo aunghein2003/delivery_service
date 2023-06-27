@@ -1,8 +1,8 @@
 import express from "express";
-import { authenticateAdmin } from "./controllers";
+import authRoute from "./auth/views";
 
 const route = express.Router();
 
-route.post("/", authenticateAdmin);
+route.use("/auth", authRoute);
 
 export default route;

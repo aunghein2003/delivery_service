@@ -1,8 +1,8 @@
 import express from "express";
-import { authenticateAdmin } from "./controllers";
+import { authenticateBiker } from "./controllers";
 
 const route = express.Router();
 
-route.post("/", authenticateAdmin);
+route.post("/", authenticateBiker);
 
 export default route;
