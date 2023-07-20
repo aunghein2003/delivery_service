@@ -51,6 +51,6 @@ export const authOptions: NextAuthOptions = {
 export async function loginIsRequired() {
   const session = await getServerSession(authOptions);
   if (!session) {
-    redirect("/api/auth/signin");
+    redirect("/auth");
   }
 }
