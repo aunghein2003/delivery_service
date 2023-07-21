@@ -3,8 +3,9 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
@@ -64,6 +65,7 @@ model pickup {
   delivery    delivery?
 
   @@index([pickup_by], map: "pickup_by")
+  @@index([order_id])
 }
 
 model delivery {
@@ -74,6 +76,7 @@ model delivery {
   biker    biker?           @relation(fields: [biker_id], references: [code], onDelete: SetNull, onUpdate: Cascade, map: "delivery_ibfk_2")
 
   @@index([biker_id], map: "biker_id")
+  @@index([order_id])
 }
 
 enum delivery_status {
