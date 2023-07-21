@@ -17,3 +17,5 @@ app.all("*", (req, res) => {
 });
 
 app.listen(process.env.PORT, () => console.log(`Server listens on Port 8080`));
+
+export default app;
