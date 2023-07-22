@@ -48,7 +48,7 @@ export default function AuthComponent() {
         password,
       });
       if (res && !res.error) {
-        router.push("/");
+        router.push("/biker");
       } else {
         toast.error(res?.error!);
       }

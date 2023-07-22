@@ -1,6 +1,6 @@
 import { loginIsRequired } from "@/lib/auth";
 
-export default async function Home() {
+export default async function Biker() {
   await loginIsRequired();
 
   return (
