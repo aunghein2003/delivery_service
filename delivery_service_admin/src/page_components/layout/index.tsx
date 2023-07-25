@@ -12,7 +12,7 @@ export default function Layout({ children }: LayoutProps) {
       <HamburgerMenu />
 
       {/* Sidebar Menu for large screen */}
-      <SidebarMenu className="w-1/5 invisible md:visible" />
+      <SidebarMenu className="w-1/5 hidden md:block" />
 
       {/* Dashboard Section */}
       <div className="w-full md:w-[80%] md:ml-[20%]">{children}</div>

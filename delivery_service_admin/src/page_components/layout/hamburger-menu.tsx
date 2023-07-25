@@ -14,6 +14,8 @@ export default function HamburgerMenu() {
     }
   };
 
+  console.log("Menu", open);
+
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);
 
@@ -25,10 +27,10 @@ export default function HamburgerMenu() {
       {open ? (
         <div ref={ref}>
           <X
-            className="absolute visible md:invisible top-5 left-5 z-50 cursor-pointer text-white"
+            className="absolute block md:hidden top-5 left-5 z-50 cursor-pointer text-white"
             onClick={() => setOpen(false)}
           />
-          <SidebarMenu className="w-1/2 sm:w-1/3 pt-12" />
+          <SidebarMenu className="w-1/2 sm:w-1/3 pt-12 z-40" />
         </div>
       ) : (
         <Menu

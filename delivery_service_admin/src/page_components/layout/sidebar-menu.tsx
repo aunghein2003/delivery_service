@@ -4,12 +4,13 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Bike, Package, Store, Truck, UserCircle2 } from "lucide-react";
-import Image from "next/image";
 
 interface SidebarMenuProps extends React.AllHTMLAttributes<HTMLDivElement> {}
 
 export default function SidebarMenu({ className, ...props }: SidebarMenuProps) {
   const pathname = usePathname();
+
+  console.log("sidebar menu");
 
   return (
     <div
