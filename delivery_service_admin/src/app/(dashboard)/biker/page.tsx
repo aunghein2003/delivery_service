@@ -1,11 +1,12 @@
 import { loginIsRequired } from "@/lib/auth";
+import BikerComponent from "@/page_components/biker";
 
 export default async function Biker() {
   await loginIsRequired();
 
   return (
-    <div>
-      <h1>Biker</h1>
-    </div>
+    <>
+      <BikerComponent />
+    </>
   );
 }

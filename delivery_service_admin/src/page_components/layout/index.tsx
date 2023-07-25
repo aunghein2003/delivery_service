@@ -15,9 +15,7 @@ export default function Layout({ children }: LayoutProps) {
       <SidebarMenu className="w-1/5 invisible md:visible" />
 
       {/* Dashboard Section */}
-      <div className="w-full md:w-[80%] md:ml-[20%] p-10 bg-sky-300">
-        {children}
-      </div>
+      <div className="w-full md:w-[80%] md:ml-[20%]">{children}</div>
     </div>
   );
 }

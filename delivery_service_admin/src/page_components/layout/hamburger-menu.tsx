@@ -25,14 +25,14 @@ export default function HamburgerMenu() {
       {open ? (
         <div ref={ref}>
           <X
-            className="absolute visible md:invisible top-5 left-5 z-50 text-white"
+            className="absolute visible md:invisible top-5 left-5 z-50 cursor-pointer text-white"
             onClick={() => setOpen(false)}
           />
           <SidebarMenu className="w-1/2 sm:w-1/3 pt-12" />
         </div>
       ) : (
         <Menu
-          className="absolute visible md:invisible top-5 left-5 z-50"
+          className="absolute visible md:invisible top-5 left-5 z-50 cursor-pointer"
           onClick={() => setOpen(true)}
         />
       )}

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Bike, Package, Store, Truck, UserCircle2 } from "lucide-react";
+import Image from "next/image";
 
 interface SidebarMenuProps extends React.AllHTMLAttributes<HTMLDivElement> {}
 
@@ -19,10 +20,10 @@ export default function SidebarMenu({ className, ...props }: SidebarMenuProps) {
       {...props}
     >
       <div className="flex items-center gap-x-5 py-5 pb-7">
-        <UserCircle2 className="w-8 h-8" />
+        <UserCircle2 className="w-8 h-8 text-[#96f5f5]" />
         <div>
           <h1 className="text-lg text-[#96f5f5]">Admin</h1>
-          <h3 className="text-sm">Admin</h3>
+          <h3 className="text-sm text-slate-300">Admin</h3>
         </div>
       </div>
       <div className="pt-7 space-y-9 border-t-2 border-t-[#FFFFCC]">
